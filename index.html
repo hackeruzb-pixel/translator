@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -35,6 +35,55 @@
             </ul>
         </div>
         <button>Translate Text</button>
+    </div>
+    <script src="./js/countries.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarjimon</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="language-select">
+            <select id="fromLang">
+                <option value="en-GB" selected>Ingliz</option>
+                <option value="uz-UZ">O'zbek</option>
+            </select>
+            <i class="fas fa-right-left exchange-icon"></i>
+            <select id="toLang">
+                <option value="uz-UZ" selected>O'zbek</option>
+                <option value="en-GB">Ingliz</option>
+            </select>
+        </div>
+
+        <div class="textarea-container">
+            <textarea id="fromText" placeholder="Matn kiriting" maxlength="5000"></textarea>
+            <div class="tools">
+                <i id="from" class="fas fa-volume-up"></i>
+                <i id="from" class="fas fa-copy"></i>
+            </div>
+        </div>
+
+        <button id="translateBtn">Tarjima qilish</button>
+
+        <div class="textarea-container">
+            <textarea id="toText" placeholder="Tarjima" readonly disabled></textarea>
+            <div class="tools">
+                <i id="to" class="fas fa-volume-up"></i>
+                <i id="to" class="fas fa-copy"></i>
+            </div>
+        </div>
     </div>
     <script src="./js/countries.js"></script>
     <script src="./js/script.js"></script>
