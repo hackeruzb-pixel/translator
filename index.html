@@ -1,47 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>Translator</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="wrapper">
-            <div class="text-input">
-                <textarea class="from-text" placeholder="Enter text"></textarea>
-                <textarea class="to-text" placeholder="Translation" readonly disabled></textarea>
-            </div>
-            <ul class="controls">
-                <li class="row from">
-                    <div class="icons">
-                        <i id="from" class="fas fa-volume-up"></i>
-                        <i id="from" class="fas fa-copy"></i>
-                    </div>
-                    <select></select>
-                </li>
-                <li class="exchange"><i class="fas fa-exchange-alt"></i></li>
-                <li class="row to">
-                    <select></select>
-                    <div class="icons">
-                        <i id="to" class="fas fa-volume-up"></i>
-                        <i id="to" class="fas fa-copy"></i>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <button>Translate Text</button>
-    </div>
-    <script src="./js/countries.js"></script>
-    <script src="./js/script.js"></script>
-</body>
-
-</html> -->
-
 <!DOCTYPE html>
 <html lang="uz">
 
@@ -56,19 +12,13 @@
 <body>
     <div class="app-container">
         <div class="language-select">
-            <select id="fromLang">
-                <option value="en-GB" selected>Ingliz</option>
-                <option value="uz-UZ">O'zbek</option>
-            </select>
+            <select id="fromLang"></select>
             <i class="fas fa-right-left exchange-icon"></i>
-            <select id="toLang">
-                <option value="uz-UZ" selected>O'zbek</option>
-                <option value="en-GB">Ingliz</option>
-            </select>
+            <select id="toLang"></select>
         </div>
 
         <div class="textarea-container">
-            <textarea id="fromText" placeholder="Matn kiriting" maxlength="5000"></textarea>
+            <textarea id="fromText" placeholder="" maxlength="5000"></textarea>
             <div class="tools">
                 <i id="from" class="fas fa-volume-up"></i>
                 <i id="from" class="fas fa-copy"></i>
@@ -78,12 +28,18 @@
         <button id="translateBtn">Tarjima qilish</button>
 
         <div class="textarea-container">
-            <textarea id="toText" placeholder="Tarjima" readonly disabled></textarea>
+            <textarea id="toText" placeholder="Tarjimasi" readonly disabled></textarea>
             <div class="tools">
                 <i id="to" class="fas fa-volume-up"></i>
                 <i id="to" class="fas fa-copy"></i>
             </div>
         </div>
+          <div class="history">
+      <a href="history.html" class="history-link">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h3>Tarix</h3>
+      </a>
+    </div>
     </div>
     <script src="./js/countries.js"></script>
     <script src="./js/script.js"></script>

@@ -1,66 +1,3 @@
-// const fromText = document.querySelector(".from-text");
-// const toText = document.querySelector(".to-text");
-// const selectTag = document.querySelectorAll("select");
-// const exchangeIcon = document.querySelector(".exchange");
-// const translateBtn = document.querySelector("button");
-// const icons = document.querySelectorAll(".row i");
-
-// selectTag.forEach((tag, id) => {
-//   for (const country_code in countries) {
-//     let selected;
-//     if (id == 0 && country_code == "en-GB") {
-//       selected = "selected";
-//     } else if (id == 1 && country_code == "uz-UZ") {
-//       selected = "selected";
-//     }
-//     let option = ` <option value="${country_code}" ${selected}>${countries[country_code]}</option>`;
-//     tag.insertAdjacentHTML("beforeend", option);
-//   }
-// });
-
-// exchangeIcon.addEventListener("click", () => {
-//   let tempText = fromText.value;
-//   tempLang = selectTag[0].value;
-//   fromText.value = toText.value;
-//   selectTag[0].value = selectTag[1].value;
-//   toText.value = tempText;
-//   selectTag[1].value = tempLang;
-// });
-
-// translateBtn.addEventListener("click", () => {
-//   let text = fromText.value,
-//     translateFrom = selectTag[0].value,
-//     translateTo = selectTag[1].value;
-//   let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
-//   fetch(apiUrl)
-//     .then((res) => res.json())
-//     .then((data) => {
-//       toText.value = data.responseData.translatedText;
-//     });
-// });
-
-// icons.forEach((icon) => {
-//   icon.addEventListener("click", ({ target }) => {
-//    if (target.classList.contains("fa-copy")) {
-//       if (target.id === "from") {
-//        navigator.clipboard.writeText(fromText.value)
-//       } else if (target.id === "to") {
-//          navigator.clipboard.writeText(toText.value)
-//       }
-//     } else if (target.classList.contains("fa-volume-up")) {
-//         let utterance;
-//       if (target.id === "from") {
-//        utterance = new SpeechSynthesisUtterance(fromText.value)
-//        utterance.lang = selectTag[0].value;
-//       } else if (target.id === "to") {
-//        utterance = new SpeechSynthesisUtterance(toText.value)
-//        utterance.lang = selectTag[1].value
-//       }
-//       speechSynthesis.speak(utterance)
-//     }
-//   });
-// });
-
 const fromText = document.getElementById("fromText");
 const toText = document.getElementById("toText");
 const fromLang = document.getElementById("fromLang");
@@ -69,8 +6,33 @@ const exchangeIcon = document.querySelector(".exchange-icon");
 const translateBtn = document.getElementById("translateBtn");
 const icons = document.querySelectorAll(".tools i");
 
-// Tilni almashtirish
+function loadLanguages() {
+  const autoOption = document.createElement("option");
+  autoOption.value = "auto";
+  autoOption.textContent = "Avtomatik aniqlash";
+  fromLang.appendChild(autoOption);
+
+  for (const code in countries) {
+    const option1 = document.createElement("option");
+    option1.value = code;
+    option1.textContent = countries[code];
+    fromLang.appendChild(option1);
+
+    const option2 = document.createElement("option");
+    option2.value = code;
+    option2.textContent = countries[code];
+    toLang.appendChild(option2);
+  }
+
+  fromLang.value = "auto";
+  toLang.value = "uz-UZ";
+}
+
+loadLanguages();
+
 exchangeIcon.addEventListener("click", () => {
+  if (fromLang.value === "auto") return;
+
   let tempText = fromText.value;
   let tempLang = fromLang.value;
   fromText.value = toText.value;
@@ -79,33 +41,57 @@ exchangeIcon.addEventListener("click", () => {
   toLang.value = tempLang;
 });
 
-// Tarjima qilish
 translateBtn.addEventListener("click", () => {
   let text = fromText.value.trim();
   if (!text) return;
+
   let translateFrom = fromLang.value;
   let translateTo = toLang.value;
-  let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+
+  if (translateFrom === "auto") {
+    const detectUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|en`;
+    fetch(detectUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        const detectedLang = data.responseData?.match?.lang || data.responseData.language || "en-GB";
+        doTranslate(text, detectedLang, translateTo);
+      })
+      .catch(() => {
+        toText.value = "Tilni aniqlab bo‘lmadi.";
+      });
+  } else {
+    doTranslate(text, translateFrom, translateTo);
+  }
+});
+
+function doTranslate(text, from, to) {
+  const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
   fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => {
-      toText.value = data.responseData.translatedText;
+      const translated = data.responseData.translatedText;
+      toText.value = translated;
+      saveToHistory(text, translated);
+    })
+    .catch(() => {
+      toText.value = "Tarjimada xatolik yuz berdi.";
     });
-});
+}
 
-// Copy va Ovoz
 icons.forEach((icon) => {
   icon.addEventListener("click", ({ target }) => {
+    const isFrom = target.id === "from";
+    const value = isFrom ? fromText.value : toText.value;
+    const lang = isFrom ? fromLang.value : toLang.value;
+
     if (target.classList.contains("fa-copy")) {
-      const value = target.id === "from" ? fromText.value : toText.value;
       navigator.clipboard.writeText(value);
     } else if (target.classList.contains("fa-volume-up")) {
-      const value = target.id === "from" ? fromText.value : toText.value;
-      const lang = target.id === "from" ? fromLang.value : toLang.value;
       if (!value.trim()) return;
       const utterance = new SpeechSynthesisUtterance(value);
-      utterance.lang = lang;
+      utterance.lang = lang === "auto" ? "en-GB" : lang;
       speechSynthesis.speak(utterance);
     }
   });
 });
+

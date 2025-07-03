@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarix</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <h2>Tarix</h2>
+<ul id="historyList"></ul>
+    <a href="index.html" class="history-link">← Orqaga</a>
+  </div>
+
+<script>
+  const historyList = document.getElementById("historyList");
+
+  function renderHistory() {
+    const history = JSON.parse(localStorage.getItem("translateHistory")) || [];
+    historyList.innerHTML = "";
+
+    if (history.length === 0) {
+      historyList.innerHTML = "<li>Hozircha tarjima tarixi mavjud emas.</li>";
+      return;
+    }
+
+    history.forEach((item) => {
+      const li = document.createElement("li");
+      li.classList.add("history-item");
+      li.innerHTML = `<strong>${item.original}</strong> → ${item.translated}`;
+      historyList.appendChild(li);
+    });
+  }
+
+  renderHistory();
+</script>
+
+</body>
+</html>
