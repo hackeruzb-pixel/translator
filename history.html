@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
@@ -37,4 +37,124 @@
 </script>
 
 </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjima tarixi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #333;
+      text-align: center;
+    }
+
+    #historyList {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .history-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #f1f1f1;
+      border-radius: 6px;
+    }
+
+    .history-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      text-decoration: none;
+      color: #3366cc;
+      font-weight: bold;
+    }
+
+    .history-link:hover {
+      text-decoration: underline;
+    }
+
+    #clearHistoryBtn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #clearHistoryBtn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <h2>Tarjima tarixi</h2>
+
+    <ul id="historyList"></ul>
+
+    <button id="clearHistoryBtn">🗑 Tarixni tozalash</button>
+
+    <a href="index.html" class="history-link">← Orqaga</a>
+  </div>
+
+  <script>
+    const historyList = document.getElementById("historyList");
+    const clearBtn = document.getElementById("clearHistoryBtn");
+
+    function renderHistory() {
+      const history = JSON.parse(localStorage.getItem("translateHistory")) || [];
+      historyList.innerHTML = "";
+
+      if (history.length === 0) {
+        historyList.innerHTML = "<li class='history-item'>Hozircha tarjima tarixi mavjud emas.</li>";
+        return;
+      }
+
+      history.forEach((item) => {
+        const li = document.createElement("li");
+        li.classList.add("history-item");
+        li.innerHTML = `<strong>${item.original}</strong> → ${item.translated}`;
+        historyList.appendChild(li);
+      });
+    }
+
+    clearBtn.addEventListener("click", () => {
+      if (confirm("Tarixni o‘chirishga ishonchingiz komilmi?")) {
+        localStorage.removeItem("translateHistory");
+        renderHistory();
+      }
+    });
+
+    renderHistory();
+  </script>
+</body>
 </html>
+
