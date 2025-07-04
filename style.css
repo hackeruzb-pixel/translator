@@ -121,14 +121,22 @@
     font-family: sans-serif;
   }
 
-  .custom-loading {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  background-color: #f1f1f1;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin: 10px 0;
+.ring-loader {
+  display: none;
+  width: 40px;
+  height: 40px;
+  margin: 20px auto;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #4CAF50;
+  border-radius: 50%;
+  animation: ringSpin 0.8s linear infinite;
+}
+
+@keyframes ringSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
