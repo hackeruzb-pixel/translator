@@ -5,6 +5,7 @@ const toLang = document.getElementById("toLang");
 const exchangeIcon = document.querySelector(".exchange-icon");
 const translateBtn = document.getElementById("translateBtn");
 const icons = document.querySelectorAll(".tools i");
+const loadingText = document.getElementById("loadingText");
 
 function loadLanguages() {
   const autoOption = document.createElement("option");
@@ -27,7 +28,6 @@ function loadLanguages() {
   fromLang.value = "auto";
   toLang.value = "uz-UZ";
 }
-
 loadLanguages();
 
 exchangeIcon.addEventListener("click", () => {
@@ -58,7 +58,7 @@ translateBtn.addEventListener("click", () => {
       })
       .catch(() => {
         toText.value = "Tilni aniqlab bo‘lmadi.";
-      }); 
+      });
   } else {
     doTranslate(text, translateFrom, translateTo);
   }
@@ -66,21 +66,29 @@ translateBtn.addEventListener("click", () => {
 
 function doTranslate(text, from, to) {
   const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
-
-  const loadingText = document.getElementById("loadingText");
   loadingText.style.display = "block";
+
   fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => {
+      console.log("API javobi:", data); 
       const translated = data.responseData.translatedText;
       toText.value = translated;
       saveToHistory(text, translated);
     })
     .catch(() => {
       toText.value = "Tarjimada xatolik yuz berdi.";
-    }) .finally(() => {
-      loadingText.style.display = "none";   
+    })
+    .finally(() => {
+      loadingText.style.display = "none";
     });
+}
+
+function saveToHistory(original, translated) {
+  const history = JSON.parse(localStorage.getItem("translateHistory")) || [];
+  history.unshift({ original, translated });
+  if (history.length > 100) history.pop(); 
+  localStorage.setItem("translateHistory", JSON.stringify(history));
 }
 
 icons.forEach((icon) => {
