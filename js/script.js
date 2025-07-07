@@ -8,11 +8,6 @@ const icons = document.querySelectorAll(".tools i");
 const loadingText = document.getElementById("loadingText");
 
 function loadLanguages() {
-  const autoOption = document.createElement("option");
-  autoOption.value = "auto";
-  autoOption.textContent = "Avtomatik aniqlash";
-  fromLang.appendChild(autoOption);
-
   for (const code in countries) {
     const option1 = document.createElement("option");
     option1.value = code;
@@ -25,14 +20,12 @@ function loadLanguages() {
     toLang.appendChild(option2);
   }
 
-  fromLang.value = "auto";
-  toLang.value = "uz-UZ";
+  fromLang.value = "en-GB"; // default from language
+  toLang.value = "uz-UZ";   // default to language
 }
 loadLanguages();
 
 exchangeIcon.addEventListener("click", () => {
-  if (fromLang.value === "auto") return;
-
   let tempText = fromText.value;
   let tempLang = fromLang.value;
   fromText.value = toText.value;
@@ -48,20 +41,7 @@ translateBtn.addEventListener("click", () => {
   let translateFrom = fromLang.value;
   let translateTo = toLang.value;
 
-  if (translateFrom === "auto") {
-    const detectUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|en`;
-    fetch(detectUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        const detectedLang = data.responseData?.match?.lang || data.responseData.language || "en-GB";
-        doTranslate(text, detectedLang, translateTo);
-      })
-      .catch(() => {
-        toText.value = "Tilni aniqlab bo‘lmadi.";
-      });
-  } else {
-    doTranslate(text, translateFrom, translateTo);
-  }
+  doTranslate(text, translateFrom, translateTo);
 });
 
 function doTranslate(text, from, to) {
@@ -71,7 +51,6 @@ function doTranslate(text, from, to) {
   fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => {
-      console.log("API javobi:", data); 
       const translated = data.responseData.translatedText;
       toText.value = translated;
       saveToHistory(text, translated);
@@ -87,7 +66,7 @@ function doTranslate(text, from, to) {
 function saveToHistory(original, translated) {
   const history = JSON.parse(localStorage.getItem("translateHistory")) || [];
   history.unshift({ original, translated });
-  if (history.length > 100) history.pop(); 
+  if (history.length > 100) history.pop();
   localStorage.setItem("translateHistory", JSON.stringify(history));
 }
 
@@ -102,7 +81,7 @@ icons.forEach((icon) => {
     } else if (target.classList.contains("fa-volume-up")) {
       if (!value.trim()) return;
       const utterance = new SpeechSynthesisUtterance(value);
-      utterance.lang = lang === "auto" ? "en-GB" : lang;
+      utterance.lang = lang;
       speechSynthesis.speak(utterance);
     }
   });
