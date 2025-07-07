@@ -1,142 +1,224 @@
- * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-     font-family: "Segoe UI", sans-serif;
- }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
- body {
-     background: #f8f9fa;
-     display: flex;
-     justify-content: center;
-     align-items: flex-start;
-     min-height: 100vh;
-     padding: 20px;
- }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f2f4f8;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
 
- .app-container {
-     background: #fff;
-     width: 100%;
-     max-width: 420px;
-     border-radius: 12px;
-     padding: 20px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
- }
+.app-container {
+  background: #fff;
+  width: 100%;
+  max-width: 640px;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
 
- .language-select {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     gap: 10px;
-     margin-bottom: 20px;
- }
+.language-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
- .language-select select {
-     flex: 1;
-     padding: 10px;
-     font-size: 14px;
-     border-radius: 8px;
-     border: 1px solid #ccc;
-     background: #fff;
- }
+.language-select select {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+}
 
- .language-select i {
-     font-size: 18px;
-     color: #5f6368;
-     cursor: pointer;
- }
+.exchange-icon {
+  font-size: 18px;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.3s ease;
+}
 
- .textarea-container {
-     margin-bottom: 20px;
- }
+.exchange-icon:hover {
+  color: #111827;
+}
 
- .textarea-container textarea {
-     width: 100%;
-     height: 140px;
-     padding: 12px;
-     font-size: 15px;
-     resize: none;
-     border: 1px solid #dadce0;
-     border-radius: 10px;
-     background: #fff;
- }
+.textarea-container {
+  position: relative;
+  margin-bottom: 16px;
+}
 
- .textarea-container textarea[disabled] {
-     background: #f1f3f4;
- }
+textarea {
+  width: 100%;
+  height: 140px;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: #f9fafb;
+  color: #1f2937;
+  resize: vertical;
+}
 
- .tools {
-     display: flex;
-     justify-content: flex-end;
-     gap: 15px;
-     margin-top: 8px;
-     color: #5f6368;
- }
+textarea[readonly] {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
 
- .tools i {
-     cursor: pointer;
-     font-size: 16px;
- }
+.tools {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  display: flex;
+  gap: 12px;
+}
 
- button#translateBtn {
-     width: 100%;
-     padding: 14px;
-     background-color: #4CAF50;
-     color: white;
-     border: none;
-     border-radius: 10px;
-     font-size: 16px;
-     margin-bottom: 20px;
-     cursor: pointer;
-     transition: background 0.3s ease;
- }
+.tools i {
+  font-size: 16px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
 
- button#translateBtn:hover {
-     background-color: #45a049;
- }
+.tools i:hover {
+  color: #111827;
+}
 
-.history-link {
-  display: block;
+.image-upload {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.image-upload label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f1f5f9;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #1f2937;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.image-upload label:hover {
+  background-color: #e2e8f0;
+}
+
+#extractBtn {
+  background-color: #0ea5e9;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+#extractBtn:hover {
+  background-color: #0284c7;
+  transform: translateY(-1px);
+}
+
+/* ✅ Translate Button */
+#translateBtn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+#translateBtn:hover {
+  background-color: #16a34a;
+}
+
+.ring-loader {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.history {
   text-align: center;
   margin-top: 20px;
-  font-weight: bold;
-  color: #3366cc;
+}
+
+.history-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
+  font-weight: 600;
+  color: #2563eb;
+  font-size: 16px;
+  transition: color 0.2s;
 }
 
 .history-link:hover {
-  text-decoration: underline;
+  color: #1d4ed8;
 }
 
- #historyList {
-    list-style: none;
-    padding-left: 0;
+@media (max-width: 768px) {
+  .language-select {
+    /* flex-direction: column; */
+    gap: 8px;
   }
 
-  .history-item {
-    padding: 8px;
-    margin-bottom: 5px;
-    background: #f3f3f3;
-    border-radius: 6px;
-    font-family: sans-serif;
+  .language-select select {
+    width: 100%;
   }
 
-.ring-loader {
-  display: none;
-  width: 40px;
-  height: 40px;
-  margin: 20px auto;
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #4CAF50;
-  border-radius: 50%;
-  animation: ringSpin 0.8s linear infinite;
+  .tools {
+    position: static;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+
+  .image-upload {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #extractBtn, .image-upload label {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
-@keyframes ringSpin {
-  0% {
-    transform: rotate(0deg);
+@media (max-width: 480px) {
+  .app-container {
+    padding: 16px;
+    border-radius: 10px;
   }
-  100% {
-    transform: rotate(360deg);
+
+  textarea {
+    font-size: 15px;
+  }
+
+  #translateBtn, #extractBtn {
+    font-size: 15px;
   }
 }

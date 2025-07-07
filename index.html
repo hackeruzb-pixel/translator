@@ -1,49 +1,58 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tarjimon</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjimon</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-
 <body>
-    <div class="app-container">
-        <div class="language-select">
-            <select id="fromLang"></select> 
-            <i class="fas fa-right-left exchange-icon"></i>
-            <select id="toLang"></select>
-        </div>
-
-        <div class="textarea-container">
-            <textarea id="fromText" placeholder="" maxlength="5000"></textarea>
-            <div class="tools">
-                <i id="from" class="fas fa-volume-up"></i>
-                <i id="from" class="fas fa-copy"></i>
-            </div>
-        </div>
-
-        <button id="translateBtn">Tarjima qilish</button>
-        <div id="loadingText" class="ring-loader"></div>
-
-        <div class="textarea-container">
-            <textarea id="toText" placeholder="Tarjimasi" readonly disabled></textarea>
-            <div class="tools">
-                <i id="to" class="fas fa-volume-up"></i>
-                <i id="to" class="fas fa-copy"></i>
-            </div>
-        </div>
-        <div class="history">
-            <a href="history.html" class="history-link">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                <h3>Tarix</h3>
-            </a>
-        </div>
+  <div class="app-container">
+    <div class="language-select">
+      <select id="fromLang"></select>
+      <i class="fas fa-right-left exchange-icon"></i>
+      <select id="toLang"></select>
     </div>
-    <script src="./js/countries.js"></script>
-    <script src="./js/script.js"></script>
-</body>
 
+    <div class="textarea-container">
+      <textarea id="fromText" placeholder="Matn kiriting yoki rasm yuklang..." maxlength="5000"></textarea>
+      <div class="tools">
+        <i id="from" class="fas fa-volume-up"></i>
+        <i id="from" class="fas fa-copy"></i>
+      </div>
+    </div>
+
+    <div class="image-upload">
+      <label for="imageInput" class="image-label">
+        <i class="fa-solid fa-camera"></i>
+        <span>Rasm tanlash</span>
+      </label>
+      <input type="file" id="imageInput" accept="image/*" style="display: none;" />
+      <button id="extractBtn" class="extract-btn">📄 Matnni olish</button>
+    </div>
+
+    <button id="translateBtn">Tarjima qilish</button>
+    <div id="loadingText" class="ring-loader" style="display: none;"></div>
+
+    <div class="textarea-container">
+      <textarea id="toText" placeholder="Tarjima..." readonly disabled></textarea>
+      <div class="tools">
+        <i id="to" class="fas fa-volume-up"></i>
+        <i id="to" class="fas fa-copy"></i>
+      </div>
+    </div>
+
+    <div class="history">
+      <a href="history.html" class="history-link">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h3>Tarix</h3>
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.1/dist/tesseract.min.js"></script>
+  <script src="./js/countries.js"></script>
+  <script src="./js/script.js"></script>
+</body>
 </html>
